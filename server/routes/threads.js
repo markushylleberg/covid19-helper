@@ -7,6 +7,8 @@ const ThreadUserComment = require('../models/ThreadUserComment');
 const userAuth = require('./users');
 
 router.get('/threads/newest', async (req, res) => {
+  const user = req.session.userId ? req.session.userId : false;
+
   const threads = await Thread.query()
     .join('User', 'User.id', '=', 'Thread.user')
     .select([
@@ -17,16 +19,19 @@ router.get('/threads/newest', async (req, res) => {
         .where('thread', ref('Thread.id'))
         .count()
         .as('like_count'),
-      ThreadUserPinned.query()
-        .where('thread', ref('Thread.id'))
-        .count()
-        .as('pinned_count'),
       ThreadUserComment.query()
         .where('thread', ref('Thread.id'))
         .count()
         .as('comment_count'),
     ])
     .orderBy('Thread.created_at', 'desc');
+
+  if (req.session.userId) {
+    const likedThreads = await ThreadUserLike.query()
+      .select('thread')
+      .where('user', '=', req.session.userId);
+    return res.send({ response: threads, liked: likedThreads });
+  }
 
   return res.send({ response: threads });
 });
@@ -42,16 +47,47 @@ router.get('/threads/mostcommented', async (req, res) => {
         .where('thread', ref('Thread.id'))
         .count()
         .as('like_count'),
-      ThreadUserPinned.query()
-        .where('thread', ref('Thread.id'))
-        .count()
-        .as('pinned_count'),
       ThreadUserComment.query()
         .where('thread', ref('Thread.id'))
         .count()
         .as('comment_count'),
     ])
     .orderBy('comment_count', 'desc');
+
+  if (req.session.userId) {
+    const likedThreads = await ThreadUserLike.query()
+      .select('thread')
+      .where('user', '=', req.session.userId);
+    return res.send({ response: threads, liked: likedThreads });
+  }
+
+  return res.send({ response: threads });
+});
+
+router.get('/threads/mostliked', async (req, res) => {
+  const threads = await Thread.query()
+    .join('User', 'User.id', '=', 'Thread.user')
+    .select([
+      'Thread.*',
+      'User.first_name',
+      'User.last_name',
+      ThreadUserLike.query()
+        .where('thread', ref('Thread.id'))
+        .count()
+        .as('like_count'),
+      ThreadUserComment.query()
+        .where('thread', ref('Thread.id'))
+        .count()
+        .as('comment_count'),
+    ])
+    .orderBy('like_count', 'desc');
+
+  if (req.session.userId) {
+    const likedThreads = await ThreadUserLike.query()
+      .select('thread')
+      .where('user', '=', req.session.userId);
+    return res.send({ response: threads, liked: likedThreads });
+  }
 
   return res.send({ response: threads });
 });
@@ -67,10 +103,6 @@ router.get('/thread/:id', async (req, res) => {
         .where('thread', ref('Thread.id'))
         .count()
         .as('like_count'),
-      ThreadUserPinned.query()
-        .where('thread', ref('Thread.id'))
-        .count()
-        .as('pinned_count'),
       ThreadUserComment.query()
         .where('thread', ref('Thread.id'))
         .count()
@@ -92,6 +124,18 @@ router.get('/thread/:id', async (req, res) => {
   return res.send({ thread, comments });
 });
 
+router.get('/threads/liked', userAuth, async (req, res) => {
+  const { userId } = req.session;
+
+  const threads = await ThreadUserLike.query()
+    .join('Thread', 'Thread.id', '=', 'ThreadUserLike.thread')
+    .select('Thread.*')
+    .where('ThreadUserLike.user', '=', userId)
+    .orderBy('ThreadUserLike.created_at', 'desc');
+
+  return res.status(200).send({ response: threads });
+});
+
 router.post('/thread', async (req, res) => {
   const { title, body } = req.body;
   const user = req.session.userId ? req.session.userId : false;
@@ -108,7 +152,6 @@ router.post('/thread', async (req, res) => {
       body,
     });
   }
-  console.log(user);
 
   return res.status(200).send({ message: 'New thread has been posted.' });
 });
@@ -129,8 +172,22 @@ router.post('/thread/like', userAuth, async (req, res) => {
   const { threadId } = req.body;
   const { userId } = req.session;
 
-  console.log(threadId);
-  console.log(userId);
+  const alreadyLiked = await ThreadUserLike.query()
+    .select()
+    .where('thread', '=', threadId)
+    .where('user', '=', userId);
+
+  if (alreadyLiked[0]) {
+    const alreadyLiked = await ThreadUserLike.query()
+      .delete()
+      .where('thread', '=', threadId)
+      .where('user', '=', userId);
+  } else {
+    const newLike = await ThreadUserLike.query().insert({
+      thread: threadId,
+      user: userId,
+    });
+  }
 });
 
 module.exports = router;
