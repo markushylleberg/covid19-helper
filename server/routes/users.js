@@ -11,8 +11,15 @@ router.get('/user/auth', async (req, res) => {
   const isUserAuthenticated = req.session.userId ? req.session.userId : false;
   if (isUserAuthenticated) {
     const userData = await User.query()
-      .select('id', 'first_name', 'last_name', 'email', 'country')
-      .where('id', isUserAuthenticated);
+      .join('UserCountry', 'UserCountry.id', '=', 'User.country')
+      .select(
+        'User.id',
+        'User.first_name',
+        'User.last_name',
+        'User.email',
+        'UserCountry.code'
+      )
+      .where('User.id', isUserAuthenticated);
     return res.status(200).send({ user: userData[0] });
   } else {
     return res.status(404).send({ status: isUserAuthenticated });

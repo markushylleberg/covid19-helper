@@ -13,7 +13,10 @@ exports.seed = function (knex) {
         { thread: 1, user: 3, content: 'HELL YA BOI..' },
         { thread: 2, user: 3, content: 'LUV IT' },
         { thread: 1, user: 4, content: '<33333 luv u guys' },
-        { thread: 2, user: 4, content: '<33333 ;))))' },
+        { thread: 2, user: 4, content: 'this some dope sheit lik' },
+        { thread: 2, user: 5, content: 'Yeeeeeeeeeee' },
+        { thread: 1, user: 5, content: 'Watch out! :O ' },
+        { thread: 1, user: 5, content: 'Wow :,)' },
       ]);
     });
 };

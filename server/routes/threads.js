@@ -2,7 +2,6 @@ const router = require('express').Router();
 const { ref } = require('objection');
 const Thread = require('../models/Thread');
 const ThreadUserLike = require('../models/ThreadUserLike');
-const ThreadUserPinned = require('../models/ThreadUserPinned');
 const ThreadUserComment = require('../models/ThreadUserComment');
 const userAuth = require('./users');
 
@@ -11,10 +10,13 @@ router.get('/threads/newest', async (req, res) => {
 
   const threads = await Thread.query()
     .join('User', 'User.id', '=', 'Thread.user')
+    .join('UserCountry', 'UserCountry.id', '=', 'User.country')
     .select([
       'Thread.*',
       'User.first_name',
       'User.last_name',
+      'User.country',
+      'UserCountry.code',
       ThreadUserLike.query()
         .where('thread', ref('Thread.id'))
         .count()
@@ -39,10 +41,12 @@ router.get('/threads/newest', async (req, res) => {
 router.get('/threads/mostcommented', async (req, res) => {
   const threads = await Thread.query()
     .join('User', 'User.id', '=', 'Thread.user')
+    .join('UserCountry', 'UserCountry.id', '=', 'User.country')
     .select([
       'Thread.*',
       'User.first_name',
       'User.last_name',
+      'UserCountry.code',
       ThreadUserLike.query()
         .where('thread', ref('Thread.id'))
         .count()
@@ -67,10 +71,12 @@ router.get('/threads/mostcommented', async (req, res) => {
 router.get('/threads/mostliked', async (req, res) => {
   const threads = await Thread.query()
     .join('User', 'User.id', '=', 'Thread.user')
+    .join('UserCountry', 'UserCountry.id', '=', 'User.country')
     .select([
       'Thread.*',
       'User.first_name',
       'User.last_name',
+      'UserCountry.code',
       ThreadUserLike.query()
         .where('thread', ref('Thread.id'))
         .count()
@@ -95,10 +101,12 @@ router.get('/threads/mostliked', async (req, res) => {
 router.get('/thread/:id', async (req, res) => {
   const thread = await Thread.query()
     .join('User', 'User.id', '=', 'Thread.user')
+    .join('UserCountry', 'UserCountry.id', '=', 'User.country')
     .select([
       'Thread.*',
       'User.first_name',
       'User.last_name',
+      'UserCountry.code',
       ThreadUserLike.query()
         .where('thread', ref('Thread.id'))
         .count()
@@ -112,12 +120,14 @@ router.get('/thread/:id', async (req, res) => {
 
   const comments = await ThreadUserComment.query()
     .join('User', 'User.id', '=', 'ThreadUserComment.user')
+    .join('UserCountry', 'UserCountry.id', '=', 'User.country')
     .select(
       'ThreadUserComment.id',
       'ThreadUserComment.content',
       'ThreadUserComment.created_at',
       'User.first_name',
-      'User.last_name'
+      'User.last_name',
+      'UserCountry.code'
     )
     .where('thread', '=', req.params.id);
 
@@ -129,7 +139,7 @@ router.get('/threads/liked', userAuth, async (req, res) => {
 
   const threads = await ThreadUserLike.query()
     .join('Thread', 'Thread.id', '=', 'ThreadUserLike.thread')
-    .select('Thread.*')
+    .select('Thread.*', 'ThreadUserLike.created_at as created_at')
     .where('ThreadUserLike.user', '=', userId)
     .orderBy('ThreadUserLike.created_at', 'desc');
 
