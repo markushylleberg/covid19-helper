@@ -177,7 +177,9 @@ router.post('/accountsettings/deleteaccount', userAuth, async (req, res) => {
     req.session.userId = false;
     return res.status(200).send({ message: deleteMessage });
   } else {
-    return res.send({ message: 'Make sure DELETE is spelled correctly!' });
+    return res
+      .status(404)
+      .send({ message: 'Make sure DELETE is spelled correctly!' });
   }
 });
 
