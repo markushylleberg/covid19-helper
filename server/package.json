@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npx nodemon app.js\" \" npm start --prefix ../client/\"",
+    "start": "node app.js",
     "migrate:make": "npx knex migrate:make initial_migration",
     "migrate:latest": "npx knex migrate:latest",
     "migrate:rollback": "npx knex migrate:rollback",
