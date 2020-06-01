@@ -30,7 +30,10 @@ const ThreadsList = (props) => {
     const fetchThreads = async () => {
       await fetch(`/threads/${sort}`, {
         method: 'GET',
-        headers: { 'Content-type': 'Application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
         credentials: 'include',
       })
         .then((res) => res.json())
