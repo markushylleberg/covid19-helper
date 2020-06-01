@@ -1,5 +1,5 @@
 // const knexSnakeCaseMapper = require('objection').knexSnakeCaseMappers;
-const credentials = require('./config/dbcredentials.js');
+// const credentials = require('./config/dbcredentials.js');
 
 // const options =
 //   process.env.NODE_ENV === 'production'
@@ -25,17 +25,17 @@ const credentials = require('./config/dbcredentials.js');
 // module.exports = knex;
 
 module.exports = {
-  development: {
-    client: 'pg',
-    connection: {
-      host: '127.0.0.1',
-      user: credentials.user,
-      password: credentials.password,
-      database: credentials.database,
-      charset: 'utf8',
-      timezone: 'utc+2',
-    },
-  },
+  // development: {
+  //   client: 'pg',
+  //   connection: {
+  //     host: '127.0.0.1',
+  //     user: credentials.user,
+  //     password: credentials.password,
+  //     database: credentials.database,
+  //     charset: 'utf8',
+  //     timezone: 'utc+2',
+  //   },
+  // },
   production: {
     client: 'postgresql',
     connection: process.env.DATABASE_URL,
