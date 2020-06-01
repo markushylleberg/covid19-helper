@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
 const KnexSessionStore = require('connect-session-knex')(session);
+const path = require('path');
 
 const app = express();
 
@@ -43,6 +44,14 @@ const shiftsRoute = require('./routes/threads.js');
 
 app.use(usersRoute);
 app.use(shiftsRoute);
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 const port = process.env.PORT || 9090;
 

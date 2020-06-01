@@ -1,0 +1,135 @@
+nav {
+  background-color: rgb(41, 40, 40);
+  color: rgb(237, 237, 237);
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  top: 0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.nav-wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  height: 60px;
+  padding: 0 20px;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 16% 84%;
+}
+
+.logo-container {
+  max-height: 60px;
+  pointer-events: none;
+}
+
+nav div:nth-child(2) {
+  text-align: right;
+}
+
+nav div a {
+  padding: 0 10px;
+  color: rgba(255, 255, 255, 0.753);
+  text-decoration: none;
+  outline: none;
+  text-transform: uppercase;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  transition: 0.1s ease;
+}
+
+nav div a:hover {
+  color: white;
+}
+
+.logo-container p {
+  margin-top: 9px;
+  font-size: 33px;
+  font-family: 'Amatic SC', cursive;
+  /* color: rgb(0, 213, 0); */
+}
+
+.logo-container p span {
+  position: absolute;
+  top: 23px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  margin-left: 4px;
+  font-weight: 300;
+  font-style: italic;
+  color: white;
+}
+
+.btn-nav {
+  border: none;
+  outline: none;
+  height: auto;
+  padding: 10px 20px;
+  margin: 0 20px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: white;
+  border-radius: 5px;
+  background-color: rgb(0, 159, 0);
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-nav:hover {
+  background-color: rgb(0, 193, 0);
+}
+
+.active-nav {
+  color: rgb(0, 193, 0) !important;
+  font-weight: 600;
+}
+
+.mobile-nav {
+  display: none;
+  height: 60px;
+  padding: 0 20px;
+}
+
+.mobile-menu {
+  text-align: right;
+  padding: 0 20px;
+  height: 0px;
+  transition: 0.5s ease;
+  display: none;
+}
+
+.mobile-menu.active {
+  height: auto;
+  display: block;
+}
+
+.mobile-menu div {
+  margin: 5px 0;
+}
+
+.nav-icon {
+  margin-top: 20px;
+}
+
+@media (max-width: 720px) {
+  .logo-container p {
+    font-size: 20px;
+    margin-top: 15px;
+    text-align: left;
+  }
+
+  .logo-container p span {
+    font-size: 10px;
+  }
+
+  .mobile-nav {
+    display: grid;
+    grid-template-columns: 16% 84%;
+  }
+
+  .nav-wrapper {
+    display: none;
+  }
+}
