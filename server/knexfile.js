@@ -1,4 +1,4 @@
-const knexSnakeCaseMapper = require('objection').knexSnakeCaseMappers;
+// const knexSnakeCaseMapper = require('objection').knexSnakeCaseMappers;
 // const credentials = require('./config/dbcredentials.js');
 
 module.exports = {
@@ -13,12 +13,12 @@ module.exports = {
   //     timezone: 'utc+2',
   //   }
   //   },
-    production: {
-      client: 'pg',
-      connection: process.env.DATABASE_URL, searchPath=['public']
-    }
-  
-  ...knexSnakeCaseMapper(),
+  production: {
+    client: 'pg',
+    connection: process.env.DATABASE_URL,
+  },
+
+  // ...knexSnakeCaseMapper(),
 
   // staging: {
   //   client: 'postgresql',
