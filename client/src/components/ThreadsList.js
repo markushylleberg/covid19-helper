@@ -28,17 +28,14 @@ const ThreadsList = (props) => {
 
   useEffect(() => {
     const fetchThreads = async () => {
-      await fetch(
-        `postgres://fbbtaykmxesxmq:5553a9ec1a8a446a9810cf0b319e7e1b01ec89baff36ee2b304674a7748ade3e@ec2-54-163-233-103.compute-1.amazonaws.com:5432/dfa0bcgn5k98ll/threads/${sort}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          credentials: 'include',
-        }
-      )
+      await fetch(`/threads/${sort}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        credentials: 'include',
+      })
         .then((res) => res.json())
         .then((response) => {
           const alreadyLikedThreads = response.liked;
