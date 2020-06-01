@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
+const path = require('path');
 const KnexSessionStore = require('connect-session-knex')(session);
 
 const app = express();
@@ -14,7 +15,7 @@ const { Model } = require('objection');
 const Knex = require('knex');
 const knexFile = require('./knexfile.js');
 
-const knex = Knex(knexFile.development);
+const knex = Knex(knexFile.options);
 
 const sessionStore = new KnexSessionStore({
   knex: knex,
@@ -43,6 +44,14 @@ const shiftsRoute = require('./routes/threads.js');
 
 app.use(usersRoute);
 app.use(shiftsRoute);
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(__dirname, 'client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 const port = process.env.PORT || 9090;
 
