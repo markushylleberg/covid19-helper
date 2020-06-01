@@ -9,7 +9,7 @@ const ThreadForm = (props) => {
 
   const handleThreadPost = async (e) => {
     e.preventDefault();
-    await fetch('http://localhost:9090/thread', {
+    await fetch('/thread', {
       method: 'POST',
       headers: { 'Content-Type': 'Application/json' },
       credentials: 'include',
