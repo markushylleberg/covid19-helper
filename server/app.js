@@ -15,7 +15,7 @@ const { Model } = require('objection');
 const Knex = require('knex');
 const knexFile = require('./knexfile.js');
 
-const knex = Knex(knexFile.development);
+const knex = Knex(knexFile.production);
 
 const sessionStore = new KnexSessionStore({
   knex: knex,
