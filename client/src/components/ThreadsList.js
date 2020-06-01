@@ -28,7 +28,7 @@ const ThreadsList = (props) => {
 
   useEffect(() => {
     const fetchThreads = async () => {
-      await fetch(`http://localhost:9090/threads/${sort}`, {
+      await fetch(`/threads/${sort}`, {
         method: 'GET',
         headers: { 'Content-type': 'Application/json' },
         credentials: 'include',
