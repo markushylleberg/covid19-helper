@@ -9,7 +9,7 @@ const AccountChangePassForm = () => {
 
   const handlePasswordChange = async (e) => {
     e.preventDefault();
-    await fetch('http://localhost:9090/accountsettings/changepassword', {
+    await fetch('/accountsettings/changepassword', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',

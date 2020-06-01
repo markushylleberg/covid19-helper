@@ -7,7 +7,7 @@ const AccountDeleteForm = () => {
 
   const handleAccountDelete = async (e) => {
     e.preventDefault();
-    await fetch('http://localhost:9090/accountsettings/deleteaccount', {
+    await fetch('/accountsettings/deleteaccount', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',

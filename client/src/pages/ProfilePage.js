@@ -8,7 +8,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     const fetchLikedThreads = async () => {
-      await fetch('http://localhost:9090/threads/liked', {
+      await fetch('/threads/liked', {
         method: 'GET',
         headers: { 'Content-type': 'Application/json' },
         credentials: 'include',

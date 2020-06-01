@@ -9,7 +9,7 @@ const CommentForm = (props) => {
 
   const handleCommentPost = async (e) => {
     e.preventDefault();
-    await fetch('http://localhost:9090/thread/comment', {
+    await fetch('/thread/comment', {
       method: 'POST',
       headers: { 'Content-type': 'Application/json' },
       credentials: 'include',

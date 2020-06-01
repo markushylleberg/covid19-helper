@@ -18,7 +18,7 @@ const Thread = (props) => {
     } else {
       setLikeCount(likeCount + 1);
     }
-    await fetch('http://localhost:9090/thread/like', {
+    await fetch('/thread/like', {
       method: 'POST',
       headers: { 'Content-type': 'Application/json' },
       credentials: 'include',

@@ -9,7 +9,7 @@ const StatsCountry = () => {
 
   useEffect(() => {
     const fetchCountries = async () => {
-      await fetch('http://localhost:9090/usercountries', {
+      await fetch('/usercountries', {
         method: 'GET',
       })
         .then((res) => res.json())

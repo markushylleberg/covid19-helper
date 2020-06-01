@@ -12,7 +12,7 @@ const SignUpForm = () => {
 
   useEffect(() => {
     const getCountries = async () => {
-      await fetch('http://localhost:9090/usercountries', {
+      await fetch('/usercountries', {
         method: 'GET',
         credentials: 'include',
       })
@@ -24,7 +24,7 @@ const SignUpForm = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    await fetch('http://localhost:9090/user/signup', {
+    await fetch('/user/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',

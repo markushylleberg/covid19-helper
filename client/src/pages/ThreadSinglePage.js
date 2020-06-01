@@ -17,7 +17,7 @@ const ThreadSinglePage = (userInfo) => {
 
   useEffect(() => {
     const fetchSingleThread = async () => {
-      await fetch(`http://localhost:9090/thread/${params.id}`, {
+      await fetch(`/thread/${params.id}`, {
         method: 'GET',
         headers: { 'Content-type': 'Application/json' },
       })

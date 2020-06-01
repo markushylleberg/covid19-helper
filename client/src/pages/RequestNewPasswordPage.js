@@ -7,7 +7,7 @@ const RequestNewPasswordPage = () => {
 
   const handleNewPasswordRequest = async (e) => {
     e.preventDefault();
-    await fetch('http://localhost:9090/newpasswordrequest', {
+    await fetch('/newpasswordrequest', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',

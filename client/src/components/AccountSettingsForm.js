@@ -11,7 +11,7 @@ const AccountSettingsForm = (props) => {
   useEffect(() => {
     setUserData(props.user);
     const getCountries = async () => {
-      await fetch('http://localhost:9090/usercountries', {
+      await fetch('/usercountries', {
         method: 'GET',
         credentials: 'include',
       })
@@ -24,7 +24,7 @@ const AccountSettingsForm = (props) => {
   }, [setCountries, props]);
 
   const handleUpdate = async (e) => {
-    await fetch('http://localhost:9090/accountsettings', {
+    await fetch('/accountsettings', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
