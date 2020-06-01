@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const Logout = () => {
+  const history = useHistory();
   useEffect(() => {
     const handleLogout = async () => {
       await fetch('/user/logout', {
         method: 'GET',
       }).then((res) => {
         if (res.status === 200) {
-          window.location.assign('/login');
+          history.push('/login');
         }
       });
     };

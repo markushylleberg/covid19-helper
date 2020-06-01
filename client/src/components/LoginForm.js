@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const LoginForm = () => {
+  const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -19,7 +21,7 @@ const LoginForm = () => {
       .then((res) => {
         console.log(res.status);
         if (res.status === 200) {
-          window.location.assign('/tipsandtricks');
+          history.push('/tipsandtricks');
         } else {
           return res.json();
         }

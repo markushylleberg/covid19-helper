@@ -11,7 +11,7 @@ function App() {
   useEffect(() => {
     const currentPath = window.location.pathname;
     const isUserAuthenticated = async () => {
-      await fetch('http://localhost:9090/user/auth', {
+      await fetch('/user/auth', {
         method: 'GET',
         credentials: 'include',
       })
