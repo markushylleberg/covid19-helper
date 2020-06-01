@@ -14,7 +14,6 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1"
   },
-  "proxy": "https://pacific-wildwood-46857.herokuapp.com",
   "secure": false,
   "scripts": {
     "start": "react-scripts start",
