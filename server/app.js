@@ -15,7 +15,7 @@ const { Model } = require('objection');
 const Knex = require('knex');
 const knexFile = require('./knexfile.js');
 
-const knex = Knex(knexFile.options);
+const knex = Knex(knexFile.production);
 
 const sessionStore = new KnexSessionStore({
   knex: knex,
@@ -46,7 +46,7 @@ app.use(usersRoute);
 app.use(shiftsRoute);
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+  app.use(express.static(__dirname, 'client/build'));
 
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));

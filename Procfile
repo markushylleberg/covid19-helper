@@ -1,1 +1,1 @@
-web: knex migrate:rollback --prefix server && knex migrate:latest --prefix server && knex seed:run --prefix server && node app.js --prefix server
+web: node server/app.js
