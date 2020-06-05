@@ -17,7 +17,7 @@ const RequestNewPasswordPage = () => {
     }).then((res) => {
       console.log(res.status);
       if (res.status === 200) {
-        window.location.assign('/confirmnewpassword');
+        history.push('/confirmnewpassword');
       }
     });
   };
