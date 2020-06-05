@@ -13,9 +13,9 @@ app.use(express.json());
 // Setup the database
 const { Model } = require('objection');
 const Knex = require('knex');
-const knexFile = require('./knexfile.js');
+const knexFile = require('../knexfile.js');
 
-const knex = Knex(knexFile.production);
+const knex = Knex(knexFile.development);
 
 const sessionStore = new KnexSessionStore({
   knex: knex,
